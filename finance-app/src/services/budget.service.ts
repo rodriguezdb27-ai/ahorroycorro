@@ -146,15 +146,16 @@ export async function getBudgetProgress(userId: string, period: 'WEEKLY' | 'MONT
           _sum: { amount: true },
         })
 
+        const budgetAmount = Number(budget.amount)
         const spentAmount = Number(spent._sum.amount) || 0
-        const percentage = budget.amount > 0 ? (spentAmount / Number(budget.amount)) * 100 : 0
+        const percentage = budgetAmount > 0 ? (spentAmount / budgetAmount) * 100 : 0
 
         return {
           budget,
           spent: spentAmount,
           percentage,
-          remaining: Number(budget.amount) - spentAmount,
-          isOverBudget: spentAmount > Number(budget.amount),
+          remaining: budgetAmount - spentAmount,
+          isOverBudget: spentAmount > budgetAmount,
         }
       })
     )
